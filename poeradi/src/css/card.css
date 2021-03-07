@@ -1,0 +1,38 @@
+@charset "UTF-8";
+/* 線の太さ */
+/* 線の色 */
+/* アニメーション秒数 */
+.card_container {
+  position: relative;
+  width: 35rem;
+  height: 25rem;
+  padding: 3rem 2rem;
+  margin: 2rem 0 3rem;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2); }
+  .card_container .card_body {
+    width: 100%;
+    height: 16rem;
+    margin: 0;
+    border-radius: 5px;
+    background-color: #ffffff; }
+  .card_container .link_button_conttainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; }
+    .card_container .link_button_conttainer .card_link_detail {
+      color: #777777;
+      text-decoration: underline; }
+    .card_container .link_button_conttainer ul li button {
+      width: 4rem;
+      height: 4rem;
+      margin: 1rem;
+      background-color: #ffffff; }
+      .card_container .link_button_conttainer ul li button img {
+        width: 100%; }
+  @media screen and (max-width: 767px) {
+    .card_container form {
+      width: 280px; } }
+
+/*# sourceMappingURL=card.css.map */

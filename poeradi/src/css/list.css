@@ -1,0 +1,94 @@
+@charset "UTF-8";
+/* 線の太さ */
+/* 線の色 */
+/* アニメーション秒数 */
+main {
+  width: 100%;
+  min-width: 320px; }
+  main .head_container {
+    width: 100%;
+    height: 150px;
+    background-color: #e4e4e4; }
+    main .head_container h2 {
+      max-width: 1000px;
+      padding-left: 2rem;
+      padding-top: 12px;
+      margin: 0 auto 0;
+      color: #444444;
+      font-size: 2.4rem; }
+  main .tab_container {
+    background-color: #e4e4e4; }
+    main .tab_container ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: left;
+      width: 100%;
+      max-width: 1000px;
+      margin: -95px auto 0;
+      padding: 0; }
+      main .tab_container ul li {
+        position: relative;
+        display: inline-block;
+        width: calc(25% + 4px);
+        padding: 20px 0;
+        margin: 0 0px 0 -4px;
+        border: solid 4px #4E98FD;
+        border-bottom: none;
+        border-radius: 2rem 2rem 0 0;
+        text-align: center;
+        font-size: 1.8rem;
+        font-weight: 500;
+        color: #1b4d92;
+        background-color: #ffffff;
+        box-shadow: 1px -1px 1px 0px rgba(0, 0, 0, 0.2); }
+      main .tab_container ul li.list0 {
+        width: 25%;
+        margin-left: 0;
+        z-index: 3; }
+      main .tab_container ul li.list1 {
+        z-index: 2; }
+      main .tab_container ul li.list2 {
+        z-index: 1; }
+      main .tab_container ul li.list3 {
+        z-index: 0; }
+      main .tab_container ul li.selected {
+        border-color: #4E98FD;
+        background-color: #4E98FD;
+        z-index: 4;
+        color: #ffffff; }
+      @media screen and (max-width: 767px) {
+        main .tab_container ul li {
+          padding: 10px 0;
+          font-size: 1.6rem;
+          border-width: 3px; } }
+  main .poem_list_container {
+    background-color: #4E98FD; }
+    main .poem_list_container .poem_list_inner {
+      max-width: 1000px;
+      min-height: 500px;
+      margin: 0 auto;
+      padding: 0 10px;
+      background-color: #4E98FD; }
+      main .poem_list_container .poem_list_inner h2 {
+        padding-top: 2rem; }
+      main .poem_list_container .poem_list_inner .poem_list_ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        padding: 0; }
+      main .poem_list_container .poem_list_inner .index_ul {
+        width: 32rem;
+        margin: 0 auto;
+        padding: 10px 0 40px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        font-weight: bold; }
+        main .poem_list_container .poem_list_inner .index_ul li {
+          color: #ffffff;
+          cursor: pointer;
+          padding: 1rem;
+          margin: 0;
+          font-size: 1.8rem; }
+
+/*# sourceMappingURL=list.css.map */
