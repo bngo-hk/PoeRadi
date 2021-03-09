@@ -90,8 +90,8 @@ code {
     display: none;
     cursor: pointer;
     position: relative;
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     background-color: $color_black;
 
     .hamburger_menu_line {
@@ -149,7 +149,7 @@ nav.hamburger {
     transition: all 0.3s;
     ul {
         width: 100%;
-        margin-top: 60px;
+        margin-top: 50px;
         display: flex;
         flex-wrap: wrap;
         border-bottom: solid 1px #ddd;
@@ -157,13 +157,13 @@ nav.hamburger {
 
         li {
             width: 100%;
-            height: 80px;
+            height: 70px;
             border-top: solid 1px #ddd;
             text-align: center;
             font-size: 1.8rem;
             font-weight: bold;
             color: $color_main;
-            line-height: 80px;
+            line-height: 70px;
             cursor: pointer;
             transition: all 0.3s;
             &:hover,
@@ -182,7 +182,7 @@ nav.hamburger {
                 font-weight: bold;
                 color: $color_main;
                 text-align: center;
-                line-height: 80px;
+                line-height: 70px;
             }
         }
     }
@@ -196,6 +196,7 @@ nav.menu_active {
 
 
 .header{
+
     .nav_container{
         display: flex;
         flex-wrap: wrap;
@@ -203,16 +204,23 @@ nav.menu_active {
         height: 60px;
         background-color: $color_black;
     }
-    @include mq($index: md_down) {
-        h1 img{
-            height: 35px !important;
-            padding-top: 2px !important;
+
+    h1{
+        margin-left: 2rem;
+        img{
+            height: 37px;
+            padding-top: 5px;
         }
     }
-    h1{
-        margin-left: 20px;
-        img{
-            height: 40px;
+    @include mq($index: md_down) {
+        .nav_container{
+            height: 50px;
+            h1{
+                img{
+                    height: 32px ;
+                    padding-top: 2px;
+                }
+            }
         }
     }
     nav{
@@ -226,6 +234,9 @@ nav.menu_active {
                     display: inline-block;
                     padding: 5px 10px ;
                     color: $color_white;
+                    &:hover{
+                        color: $color_main;
+                    }
                 }
             }
         }

@@ -9,8 +9,9 @@
   background-color: #4E98FD; }
   .post_sec .post_container {
     width: 100%;
-    max-width: 1000px;
-    padding: 20px; }
+    max-width: 80rem;
+    padding: 20px;
+    margin: 0 auto; }
     .post_sec .post_container h2.post_head {
       padding: 0px 0 20px;
       margin: 0;
@@ -33,19 +34,29 @@
     .post_sec form .error_border {
       border: solid 3px #df3232 !important;
       transition: 0.3s all; }
-    .post_sec form .text_field textarea {
-      width: 280px;
-      padding: 5px;
-      border: none;
-      border-radius: 5px;
-      resize: none;
-      box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
-      border: solid 3px #ffffff; }
-      .post_sec form .text_field textarea:focus {
-        outline: none;
-        border: solid 3px #9ec6ff; }
+    .post_sec form .text_field {
+      min-width: calc(50% - 20px); }
+      .post_sec form .text_field textarea {
+        display: block;
+        width: 36rem;
+        padding: 5px;
+        margin: 0 auto;
+        border: none;
+        border-radius: 5px;
+        resize: none;
+        box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
+        border: solid 3px #ffffff; }
+        .post_sec form .text_field textarea:focus {
+          outline: none;
+          border: solid 3px #9ec6ff; }
+      .post_sec form .text_field .error {
+        display: block;
+        width: 36rem;
+        margin: 10px auto 20px; }
     .post_sec form .info_container {
-      width: 280px; }
+      min-width: calc(50% - 20px);
+      width: 36rem;
+      padding: 0 16px; }
       .post_sec form .info_container h3 {
         margin: 20px 0 10px;
         font-size: 1.8rem;
@@ -54,7 +65,7 @@
         width: 250px;
         border: solid 2px #ffffff;
         border-radius: 5px;
-        box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2); }
+        box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1); }
         .post_sec form .info_container .input_title:focus {
           outline: none;
           border: solid 2px #9ec6ff; }
@@ -64,7 +75,7 @@
         border: solid 2px #e4e4e4;
         border-radius: 5px;
         background-color: #e4e4e4;
-        box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
+        box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
         transition: 0.3s all;
         font-size: 14px; }
         .post_sec form .info_container select:focus {
@@ -87,24 +98,29 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
+        width: 250px;
         padding: 0;
         margin-top: 40px; }
         .post_sec form .info_container .post_buttons .button_cancel {
-          width: 90px;
+          width: 80px;
           height: 40px;
           border-radius: 5px;
-          font-size: 14px;
-          box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2); }
+          font-size: 12px;
+          box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
+          transition: all 0.3s; }
+          .post_sec form .info_container .post_buttons .button_cancel:hover {
+            background-color: #f7f7f7;
+            color: #777777; }
         .post_sec form .info_container .post_buttons .button_post {
           position: relative;
-          width: 150px;
+          width: 130px;
           height: 40px;
           margin-left: 20px;
           border-radius: 5px;
           font-size: 16px;
           background: none;
           z-index: 0;
-          box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2); }
+          box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1); }
         .post_sec form .info_container .post_buttons .button_post::before {
           content: "";
           width: 100%;

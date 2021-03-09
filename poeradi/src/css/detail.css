@@ -1,3 +1,99 @@
-
+@charset "UTF-8";
+/* 線の太さ */
+/* 線の色 */
+/* アニメーション秒数 */
+.detail_sec {
+  width: 100%;
+  min-width: 320px;
+  min-height: calc(100vh - 100px);
+  padding: 4rem 3rem;
+  background-color: #4E98FD; }
+  .detail_sec .detail_container {
+    min-width: 280px;
+    width: 600px;
+    max-width: calc(100%);
+    min-height: 250px;
+    margin: 0px auto;
+    border-radius: 0.8rem;
+    background-color: #ffffff; }
+    .detail_sec .detail_container p.poem_body {
+      min-height: 160px;
+      margin: 0;
+      padding: 20px; }
+    .detail_sec .detail_container h2 {
+      max-width: 1000px;
+      padding-left: 2rem;
+      padding-top: 12px;
+      margin: 0 auto 0;
+      transform: translateY(20px);
+      color: #777777;
+      font-size: 1.6rem; }
+  .detail_sec .button_list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    padding: 20px;
+    margin: 0; }
+    .detail_sec .button_list li button {
+      width: 5rem;
+      height: 6rem;
+      padding-bottom: 2rem;
+      margin: 1rem 1rem 0rem;
+      background-color: #ffffff; }
+      .detail_sec .button_list li button img {
+        width: 100%;
+        transition: all 0.2s; }
+      .detail_sec .button_list li button:hover img {
+        opacity: 0.5; }
+      .detail_sec .button_list li button:hover::after {
+        color: #e4e4e4; }
+    .detail_sec .button_list li .good_button::after {
+      content: "いいね";
+      display: inline-block;
+      position: relative;
+      top: -0.5rem;
+      width: 4rem;
+      text-align: center;
+      color: #777777;
+      font-size: 1.2rem; }
+    .detail_sec .button_list li .hurt_button::after {
+      content: "痛いね";
+      display: inline-block;
+      position: relative;
+      top: -0.5rem;
+      width: 4rem;
+      text-align: center;
+      color: #777777;
+      font-size: 1.2rem; }
+    .detail_sec .button_list li .favo_button::after {
+      content: "お気に入り";
+      display: inline-block;
+      position: relative;
+      top: -0.5rem;
+      left: -1.5rem;
+      width: 7rem;
+      text-align: center;
+      color: #777777;
+      font-size: 1.2rem; }
+  .detail_sec .back_button_container {
+    display: flex;
+    justify-content: flex-end;
+    min-width: 280px;
+    width: 600px;
+    max-width: calc(100%);
+    margin: 0 auto; }
+    .detail_sec .back_button_container .back_button {
+      width: 10rem;
+      height: 4rem;
+      margin: 2rem 0;
+      border-radius: 1.5rem;
+      text-align: left;
+      text-indent: 1.5rem;
+      color: #777777;
+      background: #e4e4e4 url("../images/back.png") 80% center/2.4rem 2.4rem no-repeat;
+      font-weight: bold;
+      font-size: 1.4rem; }
+      .detail_sec .back_button_container .back_button:hover {
+        opacity: 0.8; }
 
 /*# sourceMappingURL=detail.css.map */

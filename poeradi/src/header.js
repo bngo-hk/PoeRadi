@@ -72,7 +72,7 @@ export const Header = (props)=>{
 
 export const Footer = (props)=>{
     return(
-        <footer class="footer">
+        <footer className="footer">
             <small className="copyright">Copyright © PoeRadi All Rights Reserved.</small>
         </footer>
     )
