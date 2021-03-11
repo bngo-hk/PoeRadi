@@ -7,6 +7,8 @@ import './css/sanitize.css';
 import './css/index.css';
 import './css/common.css';
 
+import postPoem from './dbController.js'
+
 import {List} from './list.js';
 import {Top} from './top.js';
 import {Post} from './post.js';

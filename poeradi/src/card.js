@@ -7,6 +7,7 @@ import img_hurt from './images/hurt.png';
 import img_hurt_a from './images/hurt_active.png';
 import img_favo from './images/favo.png';
 import img_favo_a from './images/favo_active.png';
+import firebase from './firebaseConfig.js'
 
 import './css/card.css';
 
