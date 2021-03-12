@@ -21,12 +21,11 @@ import {Header} from './header.js';
 import {Card} from './card.js';
 import {Detail} from './detail.js';
 
-
+export const UserContext = createContext()
 
 const UserProvider= (props)=>{
-  let [userContextVal,setUserContextVal] = useState({uid:"a",email:null});
+  let [userContextVal,setUserContextVal] = useState({uid:null,email:null});
    
-  let UserContext = createContext()
   // let userData={uid:null,email:null}
 
   useEffect(() => {

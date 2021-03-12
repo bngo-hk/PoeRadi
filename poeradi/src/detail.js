@@ -13,7 +13,7 @@ export const Detail = (props)=>{
     
     return(
         <div>
-        <Header/>
+        <Header history={props.history}/>
         <section className="detail_sec">
             <div className="detail_container">
                 {/* <img className="card_rank" {`${process.env.PUBLIC_URL}/images/rank${rank}.png`}> */}

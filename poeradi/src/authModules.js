@@ -17,9 +17,9 @@ export const authCreate= async function(email,password)
     return ret
 }
 
-const authSignIn =(email,password)=>
+export const authSignIn =(email,password)=>
 {    
-    firebase.auth().signInWithEmailAndPassword(email, password)
+    const ret =firebase.auth().signInWithEmailAndPassword(email, password)
     .then(function(){
         return false
     })
@@ -27,12 +27,13 @@ const authSignIn =(email,password)=>
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
-
         return errorCode
     });
+    return ret
 }
 
-const authSignOut = ()=>
+
+export const authSignOut = ()=>
 {
     firebase.auth().signOut().then(()=> {
     // Sign-out successful.

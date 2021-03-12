@@ -8,7 +8,6 @@ import {Card} from './card.js'
 
 
 export const List = (props)=>{
-  
     let [headerName,setHeaderName] = useState("新着")
     let [selected,setSelected] = useState({kind:"new",index:0,})
    
@@ -83,7 +82,7 @@ export const List = (props)=>{
 
     return(
             <div className="wrap">
-            <Header/>
+            <Header history={props.history}/>
                 <main>
                     <section className="poem_list_sec">
                         <div className="head_container">

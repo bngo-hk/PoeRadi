@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Link} from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import {Header,Footer} from './header.js'
 import {Card} from './card.js'
 
@@ -61,7 +61,7 @@ export const Top = (props)=>{
 
     return(
         <div className="wrap">
-            <Header/>
+            <Header history={props.history}/>
                 <main>
                     <div className="mainVisual_container">
                         <img src={`${process.env.PUBLIC_URL}/images/mainvisual.png`}/>
