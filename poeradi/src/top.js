@@ -12,7 +12,6 @@ import './css/common.css';
 
 
 export const Top = (props)=>{
-    console.log(props)
     const pickup_list =(
         <ul>
             <li>

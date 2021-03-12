@@ -1,9 +1,9 @@
 import firebase from './firebaseConfig.js'
 
 
-const authCreate=(email,password)=>
+export const authCreate= async function(email,password)
 {
-    firebase.auth().createUserWithEmailAndPassword(email, password)
+    const ret =await firebase.auth().createUserWithEmailAndPassword(email, password)
     .then(function(){
         return false
     })
@@ -14,6 +14,7 @@ const authCreate=(email,password)=>
 
         return errorCode
     });
+    return ret
 }
 
 const authSignIn =(email,password)=>
@@ -41,8 +42,17 @@ const authSignOut = ()=>
     console.log(error);
     });
 }
+export const authDelete = (user) =>{
+    user.delete().then(function() {
+        // User deleted.
+        return false
+    }).catch(function(error) {
+        // An error happened.
+        return error
+    });
+}
 
-const authGoogleSignIn=()=>{
+export const authGoogleSignIn=()=>{
     //googleプロバイダオブジェクトのインスタンスを生成する
     var provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithRedirect(provider).then(function(result) {

@@ -39,8 +39,9 @@ export const Header = (props)=>{
                         <li className="nav_contents"><Link to="/">トップ</Link></li>
                         <li className="nav_contents"><Link to="/list">ポエムを読む</Link></li>
                         <li className="nav_contents"><Link to="/post">投稿する</Link></li>
-                        <li className="nav_contents"><Link to="/login">ログイン</Link></li>
+                        <li className="nav_contents"><Link to="/login">ログイン</Link></li> 
                         <li className="nav_contents"><Link to="/regist">会員登録</Link></li>
+                        <li className="nav_contents"><Link to="/logout">ログアウト</Link></li>
                         <li className="nav_contents"><Link to="/mypage">マイページ</Link></li>
                     </ul>
             </nav>
@@ -57,6 +58,7 @@ export const Header = (props)=>{
                             <li className="nav_contents"><Link to="/login">ログイン</Link></li>
                             <li className="nav_contents"><Link to="/regist">会員登録</Link></li>
                             {/* <li className="nav_contents"><Link to="/mypage">マイページ</Link></li> */}
+                            {/* <li className="nav_contents"><Link to="/logout">ログアウト</Link></li> */}
                         </ul> 
                     </nav>
                     <button className={hamburgerClassName+" hamburger_button"} onClick={()=>{hamburgerToggle()}}>
