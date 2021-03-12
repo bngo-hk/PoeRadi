@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Link} from 'react-router-dom';
 import {Header,Footer} from './header.js'
+import {Button} from './card.js'
 
-// import './css/index.css';
+import './css/detail.css';
 
 export const Detail = (props)=>{
     const rank=0;
@@ -16,17 +17,17 @@ export const Detail = (props)=>{
         <section className="detail_sec">
             <div className="detail_container">
                 {/* <img className="card_rank" {`${process.env.PUBLIC_URL}/images/rank${rank}.png`}> */}
-                <p class="poem_body">
+                <p className="poem_body">
                     {body}
                 </p>
-                <h2 className="poem_title"></h2>
-                <ul>
-                    <li><button className="good_button"></button></li>
-                    <li><button className="hurt_button"></button></li>
-                    <li><button className="favo_button"></button></li>
+                <h2 className="poem_title">{title}</h2>
+                <ul className="button_list">
+                    <Button button="good"/>
+                    <Button button="hurt"/>
+                    <Button button="favo"/>
                 </ul>
             </div>
-            <Link to="/list"><button className="back_button">全文を読む</button></Link>
+            <div className="back_button_container"><button className="back_button" onClick={()=>{props.history.goBack()}}>戻る</button></div>
         </section>
         <Footer/>
         </div>

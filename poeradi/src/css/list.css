@@ -29,20 +29,22 @@ main {
       main .tab_container ul li {
         position: relative;
         display: inline-block;
-        width: calc(25% + 4px);
-        padding: 20px 0;
+        width: 160px;
+        max-width: calc(25% + 4px);
+        padding: 15px 0;
         margin: 0 0px 0 -4px;
-        border: solid 4px #4E98FD;
+        border: solid 4px #9ec6ff;
         border-bottom: none;
         border-radius: 2rem 2rem 0 0;
         text-align: center;
         font-size: 1.8rem;
         font-weight: 500;
-        color: #1b4d92;
+        color: #444444;
         background-color: #ffffff;
-        box-shadow: 1px -1px 1px 0px rgba(0, 0, 0, 0.2); }
+        box-shadow: 1px -1px 1px 0px rgba(0, 0, 0, 0.2);
+        cursor: pointer; }
       main .tab_container ul li.list0 {
-        width: 25%;
+        max-width: 25%;
         margin-left: 0;
         z-index: 3; }
       main .tab_container ul li.list1 {
@@ -58,6 +60,7 @@ main {
         color: #ffffff; }
       @media screen and (max-width: 767px) {
         main .tab_container ul li {
+          width: 120px;
           padding: 10px 0;
           font-size: 1.6rem;
           border-width: 3px; } }

@@ -1,0 +1,130 @@
+@charset "UTF-8";
+@import "variables";
+@import "mixin";
+
+.detail_sec{
+    width: 100%;
+    min-width: 320px;
+    min-height: calc(100vh - 100px);
+    padding: 4rem 3rem;
+    background-color: $color_main;
+    .detail_container{
+        min-width: 280px;
+        width: 600px;
+        max-width: calc(100%);
+        min-height: 250px;
+        margin: 0px auto;
+        border-radius: 0.8rem;
+        background-color: $color_white;
+        p.poem_body{
+            min-height: 160px;
+            margin: 0;
+            padding: 20px;
+        }
+        h2{
+            max-width: 1000px;
+            padding-left: 2rem;
+            padding-top: 12px;
+            margin: 0 auto 0;
+            transform: translateY( 20px);
+            color:$color_gray_d;
+            font-size: 1.6rem;
+        }
+        
+    }
+    .button_list{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            padding: 20px;
+            margin: 0;
+            li{
+                button{
+                    width: 5rem;
+                    height: 6rem;
+                    padding-bottom: 2rem;
+                    margin: 1rem 1rem 0rem;
+                    background-color: $color_white;
+                    img{
+                        width: 100%;
+                        transition: all 0.2s;
+                        
+                    }
+                    &:hover img {
+                        opacity: 0.5;
+                    }
+                    &:hover::after{
+                        color: $color_gray;
+                    }
+                }
+                .good_button{
+
+                    &::after{
+                        content: "いいね";
+                        display: inline-block;
+                        position: relative;
+                        top: -0.5rem;
+                        width: 4rem;
+                        text-align: center;
+                        color: $color_gray_d;
+                        font-size: 1.2rem;
+                    }
+                }
+                .hurt_button{
+                    
+                    &::after{
+                        content: "痛いね";
+                        display: inline-block;
+                        position: relative;
+                        top: -0.5rem;
+                        width: 4rem;
+                        text-align: center;
+                        color: $color_gray_d;
+                        font-size: 1.2rem;
+                    }
+
+                    
+                }
+                .favo_button{
+                    
+                    &::after{
+                        content: "お気に入り";
+                        display: inline-block;
+                        position: relative;
+                        top: -0.5rem;
+                        left: -1.5rem;
+                        width: 7rem;
+                        text-align: center;
+                        color: $color_gray_d;
+                        font-size: 1.2rem;
+                    }
+
+                    
+                }
+            }
+    }
+    .back_button_container{
+        display: flex;
+        justify-content: flex-end;
+        min-width: 280px;
+        width: 600px;
+        max-width: calc(100%);
+        margin: 0 auto;
+        .back_button{
+            width: 10rem;
+            height: 4rem;
+            margin:2rem 0;
+            border-radius: 1.5rem;
+            text-align: left;
+            text-indent: 1.5rem;
+            color: $color_gray_d;
+            background: $color_gray url('../images/back.png') 80% center / 2.4rem 2.4rem no-repeat;
+            font-weight: bold;
+            font-size: 1.4rem;
+            
+            &:hover{
+                opacity: 0.8;
+            }
+        }
+    }
+}
