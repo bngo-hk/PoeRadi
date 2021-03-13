@@ -15,33 +15,33 @@ export const Regist = (props)=>{
     let [submitError,setSubmitError]=useState("");
     let [submitDisabled,setSubmitDisabled] = useState(false)
     const onSubmit = async function(data)  {
-            setSubmitDisabled(true)
-            let errCode = await authCreate(data.email,data.password);
-            if(errCode){
-                //登録エラー
-                setSubmitError("error")
-                setSubmitDisabled(false)
+        setSubmitDisabled(true)
+        let errCode = await authCreate(data.email,data.password);
+        if(errCode){
+            //登録エラー
+            setSubmitError("error")
+            setSubmitDisabled(false)
+        }
+        else{
+            //登録成功                
+            //データベース登録
+            const user = firebase.auth().currentUser;
+            const createUserError = await createUserData(user.uid,user.email)
+
+            if(!createUserError){
+                //データベース登録成功
+                props.history.push("/")
+                props.history.go(0)
             }
             else{
-                //登録成功                
-                //データベース登録
-                const user = firebase.auth().currentUser;
-                const createUserError = await createUserData(user.uid,user.email)
+                //データベース登録エラー
+                setSubmitError("error")
+                let deleteError = await authDelete(user)
 
-                if(!createUserError){
-                    //データベース登録成功
-                    props.history.push("/")
-                    props.history.go(0)
-                }
-                else{
-                    //データベース登録エラー
-                    setSubmitError("error")
-                    let deleteError = await authDelete(user)
-
-                    setSubmitDisabled(false)
-                }
+                setSubmitDisabled(false)
             }
         }
+    }
     const email = watch('email');
     const password = watch('password');
 

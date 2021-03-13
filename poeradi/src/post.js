@@ -1,8 +1,10 @@
-import React,{useState} from 'react';
+import React,{useState,useContext} from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Link} from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { Header,Footer } from "./header.js";
+import {postPoem} from './dbModules.js'
+import {UserContext} from './index.js'
 
 import './css/post.css';
 import './css/common.css';
@@ -11,11 +13,29 @@ import './css/common.css';
 
 export const Post = (props)=>{
     const { register, handleSubmit,watch, reset, errors, getValues } = useForm();
-    const onSubmit = data => console.log(data);
+    let [submitError,setSubmitError]=useState("");
+    let [submitDisabled,setSubmitDisabled] = useState(false)
+    const userData = useContext(UserContext)
+    const onSubmit = async function(data)  {
+        setSubmitDisabled(true)
+        let errCode = await postPoem(data,userData.uid);
+        if(errCode){
+            //登録エラー
+            console.log(errCode)
+            setSubmitError("error")
+            setSubmitDisabled(false)
+        }
+        else{
+            //データベース登録成功 
+            showDialog(); 
+            setSubmitDisabled(false)
+        }
+    }
     let [dialog,setDialog] =useState([])
+    
     const post_body = watch("post_body")
     const post_title = watch("post_title")
-   
+
     const showDialog=()=>{
         setDialog(
             <Link to="/">
@@ -47,22 +67,23 @@ export const Post = (props)=>{
                                 <h3>タイトル(20文字まで)</h3>
                                 <input type="text" className="input_title" maxLength="20" name="post_title" ref={register({maxLength: 20,})}/>
                                 <span>{ errors.post_title && (errors.post_title.type==="maxLength" ) && "20文字以内で入力してください"}</span>
-                                <h3>ジャンル</h3>
+                                {/* <h3>ジャンル</h3>
                                 <select name="post_genre">
                                     <option value="0">なし</option>
-                                </select>
+                                </select> */}
                                 <h3>公開設定</h3>
                                 <div className="post_release_box">
-                                    <input type="radio" className="post_radio" name="post_release" value="1" defaultChecked/>
+                                    <input type="radio" className="post_radio" name="post_release" ref={register({required:true})} value="1" defaultChecked/>
                                     <label className="post_label">公開</label>
-                                    <input type="radio" className="post_radio" name="post_release" value="0"/>
+                                    <input type="radio" className="post_radio" name="post_release" ref={register({required:true})} value="0"/>
                                     <label className="post_label">非公開</label>
                                 </div>
                                 
                                 <ul className="post_buttons">
                                     <li><Link to="/"><button className="button_cancel">キャンセル</button></Link></li>
-                                    <li><button type="submit" className="button_post" onClick={()=>{ showDialog(); console.log(errors.post_body) }}>投稿する</button></li>
+                                    <li><button type="submit" className="button_post" onClick={()=>{  }}>投稿する</button></li>
                                 </ul>
+                                <div>{submitError}</div>
                             </div>
                         </form>
                     </div>

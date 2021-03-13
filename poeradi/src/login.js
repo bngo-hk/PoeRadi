@@ -16,14 +16,14 @@ export const Login = (props)=>{
             let errCode = await authSignIn(data.email,data.password);
             console.log(errCode)
             if(errCode){
-                //登録エラー
+                //ログインエラー
                 setSubmitError("error")
                 setSubmitDisabled(false)
             }
             else{
-                //データベース登録成功
+                //ログイン成功
                 console.log("login")
-                props.history.push("/")
+                props.history.goBack()
                 // props.history.go(0)
             }
         };

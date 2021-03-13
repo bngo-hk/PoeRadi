@@ -13,7 +13,6 @@ export const Header = (props)=>{
     let navAuthElements=[]
     
     const userData = useContext(UserContext)
-    console.log(userData)
 
     const hamburgerToggle = () => {
         
@@ -40,14 +39,13 @@ export const Header = (props)=>{
     }
     
     if(userData.uid===null){
-        console.log(userData.uid)
+        // console.log(userData.uid)
         navAuthElements.push(
         <>
             <li className="nav_contents"><Link to="/login">ログイン</Link></li>
             <li className="nav_contents"><Link to="/regist">会員登録</Link></li>
         </>
         )
-        console.log(navAuthElements)
     }else{
         navAuthElements.push(
         <>
