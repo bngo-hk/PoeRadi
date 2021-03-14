@@ -21,12 +21,16 @@ import {Header} from './header.js';
 import {Card} from './card.js';
 import {Detail} from './detail.js';
 
+import ScrollToTop from './scrollToTop.js';
 
+export const UserContext = createContext()
+export const ListContext = createContext([{index:0,kind:"new"},()=>{}])
+export const PoemsContext = createContext([[],()=>{}])
+export const TopContext = createContext([{pickup:[],good:[],hurt:[]},()=>{}])
 
 const UserProvider= (props)=>{
-  let [userContextVal,setUserContextVal] = useState({uid:"a",email:null});
+  let [userContextVal,setUserContextVal] = useState({uid:null,email:null});
    
-  let UserContext = createContext()
   // let userData={uid:null,email:null}
 
   useEffect(() => {
@@ -37,7 +41,13 @@ const UserProvider= (props)=>{
           uid:  user.uid,
           email:  user.email,
         })
-        
+
+      }
+      else{
+        setUserContextVal({
+          uid:  null,
+          email:  null,
+        })
       }
     });
     },
@@ -52,19 +62,44 @@ const UserProvider= (props)=>{
     </UserContext.Provider>
   )
 }
+
+const ListProvider= (props)=>{
+  let [listContextVal,setListContextVal] = useState({index:0,kind:"new"});
+  let [poemsContextVal,setPoemsContextVal] = useState([]);
+  return(
+    <ListContext.Provider value={[listContextVal,setListContextVal]}>
+      <PoemsContext.Provider value={[poemsContextVal,setPoemsContextVal]}>
+        <Route exact path="/list" component={List} />
+      </PoemsContext.Provider>
+    </ListContext.Provider>
+  )
+}
+
+const TopProvider= (props)=>{
+  let [poemsContextVal,setPoemsContextVal] = useState({pickup:[],good:[],hurt:[]});
+  return(
+      <TopContext.Provider value={[poemsContextVal,setPoemsContextVal]}>
+        <Route exact path="/" component={Top} />
+      </TopContext.Provider>
+  )
+}
+
 const App = ()=>{
 
   return(
     <BrowserRouter>
-        <div>
-          <Route exact path="/" component={Top} />
-          <Route exact path="/post" component={Post} />
-          <Route exact path="/regist" component={Regist} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/mypage" component={Mypage} />
-          <Route exact path="/list" component={List} />
-          <Route exact path="/detail" component={Detail} />
-        </div>
+        <ScrollToTop>
+          <div>
+            
+            <Route exact path="/post" component={Post} />
+            <Route exact path="/regist" component={Regist} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/mypage" component={Mypage} />
+            <Route exact path="/detail" component={Detail} />
+            <ListProvider/>
+            <TopProvider/>
+          </div>
+        </ScrollToTop>
     </BrowserRouter>
   )
 }
