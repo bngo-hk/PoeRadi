@@ -1,8 +1,10 @@
-import React from 'react';
+import React,{useContext,useEffect,useState} from 'react';
 import ReactDOM from 'react-dom';
 import { Link} from 'react-router-dom';
 import {Header,Footer} from './header.js'
 import {Card} from './card.js'
+import {TopContext} from './index.js'
+import {getPoemList} from './dbModules.js'
 
 import './css/top.css';
 import './css/common.css';
@@ -11,52 +13,88 @@ import './css/common.css';
 
 
 
+
 export const Top = (props)=>{
-    const pickup_list =(
-        <ul>
-            <li>
-                <Card/>
-            </li>
-            <li>
-                <Card/>
-            </li>
-        </ul>
-        );
 
-    let good_list=[]
-    let hurt_list=[]
-    for(let i=0;i<3;i++){
-        good_list.push(
-            <li>
-                <Card/>
-            </li>
-        )
-        hurt_list.push(
-            <li>
-                <Card/>
-            </li>
-        )
+    let [poemsDataList,setPoemsDataList] = useContext(TopContext)
+    let [poemList,setPoemList] = useState({pickup:[],good:[],hurt:[]})
+    let [errflg,seterrflg] = useState(false)
+    const constructor = async()=>{
+        seterrflg(true)
+        let datas = {}
+        datas.pickup = await getPoemList("pickup",5,2);
+        datas.good = await getPoemList("good",0,3);
+        datas.hurt = await getPoemList("hurt",0,3);
+
+        //コンテキストセット
+        setPoemsDataList(datas);
     }
-    
-    good_list.push(
-        <li>
-            <Link to="/list">
-                <div className="link_card">
-                    <p>4位以下を見る　≫</p>
-                </div>
-            </Link>
-        </li>
-    )
 
-    hurt_list.push(
-        <li>
-            <Link to="/list">
-                <div className="link_card">
-                    <p>4位以下を見る　≫</p>
-                </div>
-            </Link>
-        </li>
-    )
+
+    useEffect(() => {
+        let pickup_list=[]
+        let good_list=[]
+        let hurt_list=[]
+        if(poemsDataList.pickup.length===2)
+        {
+            pickup_list=[
+                <ul>
+                    <li>
+                        <Card data={poemsDataList.pickup[0]}/>
+                    </li>
+                    <li>
+                        <Card  data={poemsDataList.pickup[1]}/>
+                    </li>
+                </ul>
+            ]
+        }
+        if(poemsDataList.good.length===3 && poemsDataList.hurt.length===3){
+            
+            for(let i=0;i<3;i++){
+                
+                good_list.push(
+                    <li>
+                        <Card data={poemsDataList.good[i]}/>
+                    </li>
+                )
+                hurt_list.push(
+                    <li>
+                        <Card data={poemsDataList.hurt[i]}/>
+                    </li>
+                )
+            }
+            good_list.push(
+                <li>
+                    <Link to={{pathname:"/list",state:"good",}} >
+                        <div className="link_card">
+                            <p>4位以下を見る　≫</p>
+                        </div>
+                    </Link>
+                </li>
+            )
+
+            hurt_list.push(
+                <li>
+                    <Link to={{pathname:"/list",state:"hurt",}}>
+                        <div className="link_card">
+                            <p>4位以下を見る　≫</p>
+                        </div>
+                    </Link>
+                </li>
+            )
+        }
+        setPoemList({
+            pickup:pickup_list,
+            good:good_list,
+            hurt:hurt_list,
+        })
+    },
+    [poemsDataList]);
+
+    console.log(poemsDataList.pickup.length===0 && !errflg)
+    if(poemsDataList.pickup.length===0 && !errflg){
+        constructor()
+    }
     
 
     return(
@@ -72,14 +110,14 @@ export const Top = (props)=>{
                     <section className="pickup_sec">
                         <div className="pickup_container">
                         <h2>今日のピックアップ</h2>
-                            {pickup_list}
+                            {poemList.pickup}
                         </div>
                     </section>
                     <section className="good_rank_sec">
                         <div className="good_rank_container">
                             <h2>いいねランキング</h2>
                             <ul>
-                                {good_list}
+                                {poemList.good}
                             </ul>
                         </div>
                     </section>
@@ -87,7 +125,7 @@ export const Top = (props)=>{
                         <div className="hurt_rank_container">
                             <h2>痛いねランキング</h2>
                             <ul>
-                                {hurt_list}
+                                {poemList.hurt}
                             </ul>
                         </div>
                     </section>

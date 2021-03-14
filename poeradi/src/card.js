@@ -35,7 +35,6 @@ export const Button = (props)=>{
             setButtonActiveFlg(true)
             setButtonClass(name +"_button_active" )
             setButtonUrl(images[name][1])
-
         }
     }
     return(
@@ -48,22 +47,23 @@ export const Button = (props)=>{
 }
 
 export const Card = (props)=>{
+    
     const rank=0;
     return(
         
         <div className="card_container">
             {/* <img className="card_rank" {`${process.env.PUBLIC_URL}/images/rank${rank}.png`}> */}
             <p className="card_body">
-                ポエム<br/>
+                {props.data.body}<br/>
             </p>
             <div className="link_button_conttainer">
-                <Link to="/detail"><p className="card_link_detail">全文を読む</p></Link>
+                <Link to={{pathname:"/detail", state: props.data }}><p className="card_link_detail">全文を読む</p></Link>
                 <ul>
                     <Button button="good"/>
                     <Button button="hurt"/>
                 </ul>
             </div>
-            <Link to="/detail">
+            <Link to="/detail"  data={props.data}>
                 <div className="card_link">
                 </div>
             </Link>

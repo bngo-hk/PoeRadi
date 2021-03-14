@@ -1,4 +1,4 @@
-import React,{useState,useContext} from 'react';
+import React,{useState,useContext,useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Link} from 'react-router-dom';
 import { useForm } from "react-hook-form";
@@ -16,6 +16,15 @@ export const Post = (props)=>{
     let [submitError,setSubmitError]=useState("");
     let [submitDisabled,setSubmitDisabled] = useState(false)
     const userData = useContext(UserContext)
+    
+    useEffect(() => {
+        console.log(userData.uid)
+        if(userData.uid===null){
+            props.history.push("/login")
+        }
+        },
+    []);
+    
     const onSubmit = async function(data)  {
         setSubmitDisabled(true)
         let errCode = await postPoem(data,userData.uid);
@@ -32,6 +41,7 @@ export const Post = (props)=>{
         }
     }
     let [dialog,setDialog] =useState([])
+    
     
     const post_body = watch("post_body")
     const post_title = watch("post_title")
