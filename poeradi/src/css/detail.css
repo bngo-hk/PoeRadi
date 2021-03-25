@@ -19,7 +19,8 @@
     .detail_sec .detail_container p.poem_body {
       min-height: 160px;
       margin: 0;
-      padding: 20px; }
+      padding: 20px;
+      white-space: pre-wrap; }
     .detail_sec .detail_container h2 {
       max-width: 1000px;
       padding-left: 2rem;

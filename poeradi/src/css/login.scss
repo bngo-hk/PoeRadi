@@ -5,9 +5,16 @@
 .regist_login_sec{
     position: relative;
     width: 100%;
-    height: calc(100vh - 110px);
+    height: calc(100vh - 100px);
     min-width: 320px;
     background-color: $color_main;
+    .testaccount{
+        margin: 0 20px;
+        padding-top: 0px;
+        color:$color_white;
+        font-size: 1.8rem;
+
+    }
     form{
         position: absolute;
         left: 50%;
@@ -149,7 +156,14 @@
             color:$color_black;
             font-size: 2.4rem;
         }
-        
+        .submitError{
+            display: block;
+            
+            margin: 0 auto;
+            text-align: center;
+            font-size: 1.4rem;
+            color:$color_error;
+        }
     }
     @include mq($index:md_down){
         form{

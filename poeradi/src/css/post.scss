@@ -5,6 +5,7 @@
 .post_sec{
     width: 100%;
     min-width: 320px;
+    min-height: calc(100vh - 100px);
     margin: 0;
     background-color: $color_main;
     .post_container{
@@ -169,6 +170,18 @@
                 .button_post:hover::before,.button_post:focus::before{
                     opacity:0;
                 }
+            }
+            .error{
+       
+                display: block;
+                line-height: 1.5em;
+                text-indent: 1em;
+                margin: 10px 0;
+                border-radius: 4px;
+                font-size: 1.4rem;
+                background-color: rgb(223, 50, 50);
+                color: $color_white;
+                transition: 0.3s all;
             }
 
         }

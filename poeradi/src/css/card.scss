@@ -17,6 +17,8 @@
         margin: 0;
         border-radius: 5px;
         background-color: $color_white;
+        white-space: pre-wrap;
+        overflow: hidden;
     }
     .link_button_conttainer{
         display: flex;
@@ -83,6 +85,11 @@
                     }
 
                     
+                }
+                span.currentVal{
+                    text-align: center;
+                    color: $color_gray_d;
+                    font-size: 1.4rem;
                 }
             }
         }

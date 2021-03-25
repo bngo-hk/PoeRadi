@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { Header,Footer } from "./header.js";
 import {postPoem} from './dbModules.js'
 import {UserContext} from './index.js'
+import {Hint} from './hint.js'
 
 import './css/post.css';
 import './css/common.css';
@@ -16,14 +17,13 @@ export const Post = (props)=>{
     let [submitError,setSubmitError]=useState("");
     let [submitDisabled,setSubmitDisabled] = useState(false)
     const userData = useContext(UserContext)
-    
+    //ログイン判定
     useEffect(() => {
-        console.log(userData.uid)
-        if(userData.uid===null){
+        if(userData.uid===null && !userData.firstRender){
             props.history.push("/login")
         }
-        },
-    []);
+    },[])
+
     
     const onSubmit = async function(data)  {
         setSubmitDisabled(true)
@@ -31,7 +31,7 @@ export const Post = (props)=>{
         if(errCode){
             //登録エラー
             console.log(errCode)
-            setSubmitError("error")
+            setSubmitError("通信エラー。投稿に失敗しました。")
             setSubmitDisabled(false)
         }
         else{
@@ -77,8 +77,8 @@ export const Post = (props)=>{
                                 <h3>タイトル(20文字まで)</h3>
                                 <input type="text" className="input_title" maxLength="20" name="post_title" ref={register({maxLength: 20,})}/>
                                 <span>{ errors.post_title && (errors.post_title.type==="maxLength" ) && "20文字以内で入力してください"}</span>
-                                {/* <h3>ジャンル</h3>
-                                <select name="post_genre">
+                                <h3>ジャンル</h3>
+                                {/* <select name="post_genre">
                                     <option value="0">なし</option>
                                 </select> */}
                                 <h3>公開設定</h3>
@@ -91,14 +91,14 @@ export const Post = (props)=>{
                                 
                                 <ul className="post_buttons">
                                     <li><Link to="/"><button className="button_cancel">キャンセル</button></Link></li>
-                                    <li><button type="submit" className="button_post" onClick={()=>{  }}>投稿する</button></li>
+                                    <li><button type="submit" className="button_post" disabled={submitDisabled}>投稿する</button></li>
                                 </ul>
-                                <div>{submitError}</div>
+                                <div className="error">{submitError}</div>
                             </div>
                         </form>
                     </div>
-                    
                 </section>
+                <Hint/>
             <Footer/>
         </div>
     )

@@ -1,16 +1,20 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect,useContext} from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route,Link} from 'react-router-dom';
 import { useForm } from "react-hook-form";
 
 import {authSignIn} from "./authModules.js"
 import { Header,Footer } from "./header.js";
+import { UserContext } from "./index.js";
 import './css/login.css';
 
 export const Login = (props)=>{
     const { register, handleSubmit,watch, reset, errors, getValues } = useForm();
     let [submitError,setSubmitError]=useState("");
     let [submitDisabled,setSubmitDisabled] = useState(false)
+    let userData = useContext(UserContext)
+
+
     const onSubmit = async function(data)  {
             setSubmitDisabled(true)
             let errCode = await authSignIn(data.email,data.password);
@@ -22,7 +26,6 @@ export const Login = (props)=>{
             }
             else{
                 //ログイン成功
-                console.log("login")
                 props.history.goBack()
                 // props.history.go(0)
             }
@@ -30,10 +33,24 @@ export const Login = (props)=>{
     const email = watch('email');
     const password = watch('password');
 
+    useEffect(() => {
+        if(userData.uid!==null){
+            props.history.goBack()
+            return false
+        }
+    },
+    []);
+
     return(
         <>
         <Header history={props.history}/>
             <section className="regist_login_sec">
+                <p className="testaccount">テストアカウント:<br/>
+                example1@example.com<br/>
+                example2@example.com<br/>
+                example3@example.com<br/>
+                パスワード:password
+                </p>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="input_box">
                         <label>メールアドレス</label><br/>

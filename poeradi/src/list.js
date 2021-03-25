@@ -1,16 +1,21 @@
 import React,{useState,useContext,useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Link} from 'react-router-dom';
+
+import firebase from './firebaseConfig.js'
+import 'firebase/functions';
+
 import {Header,Footer} from './header.js'
 import {Card} from './card.js'
-import {getPoemList} from './dbModules.js'
-import {ListContext,PoemsContext} from './index.js'
+import {getPoemList,getFavoriteList} from './dbModules.js'
+import {ListContext,PoemsContext,UserContext} from './index.js'
+
 
  import './css/list.css';
 
 
 export const List = (props)=>{
-    
+    let userData = useContext(UserContext)
     let [selected,setSelected] = useContext(ListContext)
     let [poemsDataList,setPoemsDataList] = useContext(PoemsContext)
     let [errflg,seterrflg] = useState(false)
@@ -36,6 +41,9 @@ export const List = (props)=>{
         console.log(props.location.state)
         if(props.location.state){
             kind=props.location.state
+        }
+        if(kind==="favorite"){
+            kind="new"
         }
         const datas = await getPoemList(kind,0,100);
         //コンテキストセット
@@ -80,7 +88,7 @@ export const List = (props)=>{
     
     const writePoemListCards = (datas,index)=>{
         let poemListWork=[];
-        datas.slice(index*10, ( index*10 + 9 ) )
+        datas.slice(index*10, ( index*10 + 10 ) )
             .forEach(data => {
                 poemListWork.push(
                     <li>
@@ -94,7 +102,28 @@ export const List = (props)=>{
     }
     
     const changeTab = async(kind)=>{
-        const datas = await getPoemList(kind,0,1000);
+        let datas=[]
+        if(kind==="favorite"){
+            if( userData.uid===null){
+                //ログインチェック
+                props.history.push('login')
+                return false
+            }
+            datas = await getPoemList(kind,0,100,userData.uid);
+            console.log(datas)
+            //ファンクション
+            const dataInsertFunc = firebase.functions().httpsCallable('dataInsert');
+            const apiRet = await dataInsertFunc({datas:datas})
+                .catch(()=>{ return false})
+
+            if(apiRet){
+                datas = apiRet.data
+            }
+        }
+        else{
+            datas = await getPoemList(kind,0,100);
+        }
+        console.log(datas)
         //コンテキストセット
         setSelected({kind:kind,index:0,});
         setPoemsDataList(datas);
@@ -106,7 +135,7 @@ export const List = (props)=>{
         listAddClassName(kind);
         setPoemListCards( writePoemListCards(poemsDataList,index) );
 
-        const indexLast = Math.floor( poemsDataList.length / 10 )
+        const indexLast = Math.floor( (poemsDataList.length-1) / 10 )
         setIndexDom( writeIndexDom(kind,index,indexLast) )
     }
 

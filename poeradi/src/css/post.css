@@ -5,6 +5,7 @@
 .post_sec {
   width: 100%;
   min-width: 320px;
+  min-height: calc(100vh - 100px);
   margin: 0;
   background-color: #4E98FD; }
   .post_sec .post_container {
@@ -144,6 +145,16 @@
           background: linear-gradient(#fff27b, #ffe5a7); }
         .post_sec form .info_container .post_buttons .button_post:hover::before, .post_sec form .info_container .post_buttons .button_post:focus::before {
           opacity: 0; }
+      .post_sec form .info_container .error {
+        display: block;
+        line-height: 1.5em;
+        text-indent: 1em;
+        margin: 10px 0;
+        border-radius: 4px;
+        font-size: 1.4rem;
+        background-color: #df3232;
+        color: #ffffff;
+        transition: 0.3s all; }
 
 .dialog_area {
   position: fixed;

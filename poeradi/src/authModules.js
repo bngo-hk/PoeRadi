@@ -37,10 +37,10 @@ export const authSignOut = ()=>
 {
     firebase.auth().signOut().then(()=> {
     // Sign-out successful.
-    console.log('logout');
+    // console.log('logout');
     }).catch(error => {
     // An error happened.
-    console.log(error);
+    // console.log(error);
     });
 }
 export const authDelete = (user) =>{

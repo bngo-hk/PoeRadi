@@ -1,9 +1,8 @@
 import React,{useContext,useEffect,useState} from 'react';
-import ReactDOM from 'react-dom';
 import { Link} from 'react-router-dom';
 import {Header,Footer} from './header.js'
 import {Card} from './card.js'
-import {TopContext} from './index.js'
+import {TopContext,UserContext} from './index.js'
 import {getPoemList} from './dbModules.js'
 
 import './css/top.css';
@@ -19,6 +18,10 @@ export const Top = (props)=>{
     let [poemsDataList,setPoemsDataList] = useContext(TopContext)
     let [poemList,setPoemList] = useState({pickup:[],good:[],hurt:[]})
     let [errflg,seterrflg] = useState(false)
+    const userData = useContext(UserContext)
+    let [startButtonUrl,setStartButtonUrl] = useState("regist")
+
+
     const constructor = async()=>{
         seterrflg(true)
         let datas = {}
@@ -29,6 +32,7 @@ export const Top = (props)=>{
         //コンテキストセット
         setPoemsDataList(datas);
     }
+
 
 
     useEffect(() => {
@@ -88,10 +92,14 @@ export const Top = (props)=>{
             good:good_list,
             hurt:hurt_list,
         })
+
+        //ログイン判定 始めるボタンのリンクを変更
+        if(userData.uid!==null){
+            setStartButtonUrl("post")
+        }
     },
     [poemsDataList]);
 
-    console.log(poemsDataList.pickup.length===0 && !errflg)
     if(poemsDataList.pickup.length===0 && !errflg){
         constructor()
     }
@@ -105,7 +113,7 @@ export const Top = (props)=>{
                         <img src={`${process.env.PUBLIC_URL}/images/mainvisual.png`}/>
                     </div>
                     <div className="start_button_container">
-                        <Link to="regist"><button>会員登録して始める</button></Link>
+                        <Link to={startButtonUrl}><button>会員登録して始める</button></Link>
                     </div>
                     <section className="pickup_sec">
                         <div className="pickup_container">

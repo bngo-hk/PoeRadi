@@ -5,9 +5,14 @@
 .regist_login_sec {
   position: relative;
   width: 100%;
-  height: calc(100vh - 110px);
+  height: calc(100vh - 100px);
   min-width: 320px;
   background-color: #4E98FD; }
+  .regist_login_sec .testaccount {
+    margin: 0 20px;
+    padding-top: 0px;
+    color: #ffffff;
+    font-size: 1.8rem; }
   .regist_login_sec form {
     position: absolute;
     left: 50%;
@@ -124,6 +129,12 @@
       margin: 0 auto 0;
       color: #444444;
       font-size: 2.4rem; }
+    .regist_login_sec form .submitError {
+      display: block;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 1.4rem;
+      color: #df3232; }
   @media screen and (max-width: 767px) {
     .regist_login_sec form {
       width: 280px; } }

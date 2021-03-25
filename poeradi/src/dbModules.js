@@ -14,6 +14,7 @@ export const postPoem = async(data,uid)=>{
     //コレクション指定
     const poemRef = db.collection('poems').doc();
     const poemGetRef = db.collection('poems');
+    const userRef = db.collection('users').doc(uid).collection('posts').doc()
 
     const ret =await db.runTransaction(async(transaction)=> {
         // 最新のポエムを1件のみ取得
@@ -41,7 +42,7 @@ export const postPoem = async(data,uid)=>{
         }
 
         // ドキュメントセット 
-        const errCode =  await transaction.set(
+        await transaction.set(
             poemRef,queryData
         )
 
@@ -50,13 +51,13 @@ export const postPoem = async(data,uid)=>{
     }).catch( (error)=>{
         return error
     })
-    // 受け取ったポケモンを削除        
+       
     return ret
 }
 
-export const createUserData = (uid,email)=>{
+export const createUserData = async(uid,email)=>{
     let userRef = db.collection('users').doc(uid)
-    userRef.set({
+    const errCode = await userRef.set({
             email: email,
             name: "名も無き者",
         }
@@ -65,43 +66,148 @@ export const createUserData = (uid,email)=>{
     }).catch((error)=>{
         return error
     })
+    return errCode
 }
 
-const postEvaluation = (title,body,uid)=>{
+export const postEvaluation = async(poemId,kind,pushed)=>{
+    //コレクション指定
+    const poemRef = db.collection('poems').doc(poemId);
 
+    const ret = await db.runTransaction(async(transaction)=> {
+        // docidでポエム取得
+        const poemdoc = await poemRef.get()
+        let count=0
+        const poem = poemdoc.data()
+        // カウントアップ
+        const plusVal= pushed ? -1 : 1
+        count = poem[kind] + plusVal
+
+
+        // データを上書きする
+
+        let queryData={}
+        queryData[kind]= count
+        // console.log(queryData)
+        // ドキュメントセット 
+        const errCode =  await transaction.update(
+            poemRef,queryData
+        )
+    }).then( ()=>{
+        return false
+    }).catch( (error)=>{
+        return error
+    })
+       
+    return ret
+    
 }
 
-const postFavorite = (poemid,uid) =>{
+export const postFavorite = async(poemId,uid) =>{
+    //コレクション指定
+    const favoRef = db.collection('users').doc(uid).collection('favorites');
+
+    let errCode= false
+    const poemdoc = await favoRef.where("favoriteId", "==", poemId).get(
+    ).catch((error)=>{
+        errCode = error;
+        return error
+    })
+
+    if(errCode){
+        return errCode
+    }
+    // console.log(poemdoc.docs.length)
+    if(poemdoc.docs.length===0){
+        errCode = await favoRef.doc().set({
+            favoriteId:poemId,
+            pushtime: firebase.firestore.FieldValue.serverTimestamp(),
+        }
+        ).then(()=>{
+            return false
+        }).catch((error)=>{
+            return error
+        })
+    }
+    else if(poemdoc.docs.length===1){
+        return false
+    }
+    return errCode
+}
+export const deleteFavorite = async(poemId,uid) =>{
+    //コレクション指定
+    const favoRef = db.collection('users').doc(uid).collection('favorites');
+    let errCode= false
+    const poemdoc = await favoRef.where("favoriteId", "==", poemId).get(
+    ).catch((error)=>{
+        errCode = error;
+        return error
+    })
+    if(errCode){
+        return errCode
+    }
+
+    const gotId = poemdoc.docs[0].id
+
+    // console.log(gotId)
+
+    errCode = await favoRef.doc(gotId).delete().then(()=>{
+        return false
+    }).catch((error)=>{
+        return error
+    })
+
+    return errCode
 }
 
-export const getPoemList = async(kind,index,number)=>{
+export const getPoemList = async(kind,index,number,uid)=>{
     //クエリセット
-    const query = setQuery(kind,index,number);
+    const query = setQuery(kind,index,number,uid);
     
     let querySnapShot = await query.get({ source: source })
-        .catch(()=>{ return [] })
-    console.log(querySnapShot.docs.length,source)
+        .catch((error)=>{ 
+            console.error(error)
+            return null 
+            })
+    if(querySnapShot===null){
+        return []
+    }
     // if(querySnapShot.docs.length === 0 && source==='cache'){
     //     querySnapShot = await query.get()
-    // }  
-
+    // }
+    console.log()
     const datas = querySnapShot.docs.map(doc => {
             const docData = doc.data()
             const docId = doc.id
-        return {
-            title:docData.title,
-            body:docData.body,
-            good:docData.good,
-            hurt:docData.hurt,
-            poemId:docId
-        }
+            let docJson={}
+            if(docData.title !== undefined){
+                docJson ={
+                    title:docData.title,
+                    body:docData.body,
+                    good:docData.good,
+                    hurt:docData.hurt,
+                    poemId:docId
+                }
+            }
+            else
+            {
+                docJson={
+                    poemId:docData.favoriteId
+                    }
+            }
+
+        return (
+            docJson
+        )
     })
+    // console.log(datas)
     return datas
 }
 
-const setQuery =(kind,index,number)=>{
+const setQuery =(kind,index,number,uid)=>{
     //コレクション指定
     let poemRef = db.collection('poems');
+    let favoRef = db.collection('users').doc(uid).collection("favorites");
+    // let postRef = db.collection('users').doc(uid).collection("favorites");
     let query
 
     switch (kind) {
@@ -117,15 +223,33 @@ const setQuery =(kind,index,number)=>{
         case "hurt":
             query = poemRef.where("release", "==", true).orderBy("hurt", "desc").orderBy("posttime", "desc").limit(number)
             break;
-        //ピックアップ順
+        //ピックアップ
         case "pickup":
             query = poemRef.where("release", "==", true).orderBy("poemid","desc").startAt(index).limit(number)
+            break;
+        //お気に入り
+        case "favorite":
+            query = favoRef.orderBy("pushtime","desc").limit(number)
+            break;
+        //投稿したもの
+        case "posts":
+            query = poemRef.where("uid", "==", uid).orderBy("posttime","desc").limit(number)
             break;
         default:
             query = poemRef.where("release", "==", true).orderBy("poemid", "desc").limit(number)
             break;
     }
     return query;
+}
+
+export const getFavoriteList = async(poemId)=>{
+    //クエリセット
+    const data = await db.collection('poems').doc(poemId).get()
+    // if(querySnapShot.docs.length === 0 && source==='cache'){
+    //     querySnapShot = await query.get()
+    // }
+    
+    return data
 }
 
 const getUserData = (uid)=>{

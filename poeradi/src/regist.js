@@ -1,22 +1,24 @@
-import React,{useState,useRef} from 'react';
-import ReactDOM from 'react-dom';
+import React,{useState,useContext,useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import { useForm } from "react-hook-form";
 
 import { Header,Footer } from "./header.js";
 import {authCreate,authGoogleSignIn ,authDelete} from "./authModules.js"
 import {createUserData} from "./dbModules.js"
+import { UserContext } from "./index.js";
 import firebase from './firebaseConfig.js'
 
 import './css/login.css';
 
 export const Regist = (props)=>{
-    const { register, handleSubmit,watch, reset, errors, getValues } = useForm();
+    const { register, handleSubmit,watch, errors} = useForm();
     let [submitError,setSubmitError]=useState("");
     let [submitDisabled,setSubmitDisabled] = useState(false)
+    let userData = useContext(UserContext)
     const onSubmit = async function(data)  {
         setSubmitDisabled(true)
         let errCode = await authCreate(data.email,data.password);
+        // console.log(errCode)
         if(errCode){
             //登録エラー
             setSubmitError("error")
@@ -27,17 +29,16 @@ export const Regist = (props)=>{
             //データベース登録
             const user = firebase.auth().currentUser;
             const createUserError = await createUserData(user.uid,user.email)
-
             if(!createUserError){
                 //データベース登録成功
+                // console.log(createUserError,'auth')
                 props.history.push("/")
                 props.history.go(0)
             }
             else{
                 //データベース登録エラー
                 setSubmitError("error")
-                let deleteError = await authDelete(user)
-
+                await authDelete(user)
                 setSubmitDisabled(false)
             }
         }
@@ -45,10 +46,24 @@ export const Regist = (props)=>{
     const email = watch('email');
     const password = watch('password');
 
+    useEffect(() => {
+        if(userData.uid!==null){
+            props.history.push("/")
+            return false
+        }
+    },
+    []);
+
     return(
         <>
         <Header history={props.history}/>
             <section className="regist_login_sec">
+                <p className="testaccount">テストアカウント:<br/>
+                example1@example.com<br/>
+                example2@example.com<br/>
+                example3@example.com<br/>
+                パスワード:password
+                </p>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="input_box">
                         <label>メールアドレス</label><br/>

@@ -16,7 +16,9 @@
     height: 14rem;
     margin: 0;
     border-radius: 5px;
-    background-color: #ffffff; }
+    background-color: #ffffff;
+    white-space: pre-wrap;
+    overflow: hidden; }
   .card_container .link_button_conttainer {
     display: flex;
     flex-wrap: wrap;
@@ -64,6 +66,10 @@
       text-align: center;
       color: #777777;
       font-size: 1.2rem; }
+    .card_container .link_button_conttainer ul li span.currentVal {
+      text-align: center;
+      color: #777777;
+      font-size: 1.4rem; }
   .card_container .card_link {
     position: absolute;
     top: 0;

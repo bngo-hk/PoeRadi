@@ -8,6 +8,7 @@ import './css/index.css';
 import './css/common.css';
 
 import firebase from './firebaseConfig.js'
+import 'firebase/functions';
 
 // import postPoem from './dbModules.js'
 
@@ -20,6 +21,7 @@ import {Login} from './login.js';
 import {Header} from './header.js';
 import {Card} from './card.js';
 import {Detail} from './detail.js';
+import {NotFound} from './notfound.js';
 
 import ScrollToTop from './scrollToTop.js';
 
@@ -29,7 +31,8 @@ export const PoemsContext = createContext([[],()=>{}])
 export const TopContext = createContext([{pickup:[],good:[],hurt:[]},()=>{}])
 
 const UserProvider= (props)=>{
-  let [userContextVal,setUserContextVal] = useState({uid:null,email:null});
+  let flg=false
+  let [userContextVal,setUserContextVal] = useState({uid:null,email:null,firstRender:true});
    
   // let userData={uid:null,email:null}
 
@@ -40,6 +43,7 @@ const UserProvider= (props)=>{
         setUserContextVal({
           uid:  user.uid,
           email:  user.email,
+          firstRender:false,
         })
 
       }
@@ -47,15 +51,12 @@ const UserProvider= (props)=>{
         setUserContextVal({
           uid:  null,
           email:  null,
+          firstRender:false,
         })
       }
     });
     },
   []);
-  useEffect(() => {
-    console.log(userContextVal.uid)
-    },
-  [userContextVal.uid]);
   return(
     <UserContext.Provider value={userContextVal}>
       {props.children}
@@ -69,7 +70,9 @@ const ListProvider= (props)=>{
   return(
     <ListContext.Provider value={[listContextVal,setListContextVal]}>
       <PoemsContext.Provider value={[poemsContextVal,setPoemsContextVal]}>
-        <Route exact path="/list" component={List} />
+        <Switch>
+          <Route exact path="/list" component={List} />
+        </Switch>
       </PoemsContext.Provider>
     </ListContext.Provider>
   )
@@ -79,7 +82,9 @@ const TopProvider= (props)=>{
   let [poemsContextVal,setPoemsContextVal] = useState({pickup:[],good:[],hurt:[]});
   return(
       <TopContext.Provider value={[poemsContextVal,setPoemsContextVal]}>
-        <Route exact path="/" component={Top} />
+        <Switch>
+          <Route exact path="/" component={Top} />
+        </Switch>
       </TopContext.Provider>
   )
 }
@@ -90,14 +95,17 @@ const App = ()=>{
     <BrowserRouter>
         <ScrollToTop>
           <div>
+            <Switch>
+              <Route exact path="/post" component={Post} />
+              <Route exact path="/regist" component={Regist} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/mypage" component={Mypage} />
+              <Route exact path="/detail" component={Detail} />
+            </Switch>
             
-            <Route exact path="/post" component={Post} />
-            <Route exact path="/regist" component={Regist} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/mypage" component={Mypage} />
-            <Route exact path="/detail" component={Detail} />
             <ListProvider/>
             <TopProvider/>
+            
           </div>
         </ScrollToTop>
     </BrowserRouter>
